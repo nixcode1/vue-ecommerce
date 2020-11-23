@@ -40,6 +40,7 @@
 
 <script>
 import { db } from "../db/db.js";
+import { v4 as uuidv4 } from "uuid";
 import firebase from "firebase/app";
 import "firebase/storage";
 
@@ -69,18 +70,22 @@ export default {
     },
 
     async addProduct() {
-      db.collection("products").add({
-            name: this.product.name,
-            description: this.product.description,
-            price: parseInt(this.product.price),
-            category: this.product.category,
-            imageUrl: this.imageUrl,
-        }).then(docRef => {
-            console.log("Document written with ID: ", docRef.id);
-        }).catch(function (error) {
-            console.error("Error adding document: ", error);
+      const id = uuidv4();
+      db.collection("products")
+        .add({
+          id: id,
+          name: this.product.name,
+          description: this.product.description,
+          price: parseInt(this.product.price),
+          category: this.product.category,
+          imageUrl: this.imageUrl,
+        })
+        .then((docRef) => {
+          console.log("Document written with ID: ", docRef.id);
+        })
+        .catch(function (error) {
+          console.error("Error adding document: ", error);
         });
-      
     },
 
     async uploadFile() {
