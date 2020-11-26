@@ -1,36 +1,47 @@
-<template>
+ad<template>
   <div id="app">
     <v-app>
-      <v-navigation-drawer app>
-        <!-- -->
+e      <v-navigation-drawer
+        app
+        v-model="drawer"
+        :permanent="$vuetify.breakpoint.mdOnly"
+        :temporary="$vuetify.breakpoint.smAndDown"
+        hide-overlay
+      >
+        <v-list-item>
+          <v-list-item-content>
+            <v-list-item-title>John Leider</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-divider></v-divider>
+
+        <v-list dense>
+          <v-list-item v-for="item in drawerItems" :key="item.title" link>
+            <router-link :to="{ path: '/' + item.title}">
+            <v-list-item-icon>
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content>
+              <v-list-item-title>{{ item.title }}</v-list-item-title>
+            </v-list-item-content>
+            </router-link>
+          </v-list-item>
+        </v-list>
       </v-navigation-drawer>
 
-      <v-app-bar
-        app
-        color="#fcb69f"
-        dark
-        prominent
-        shrink-on-scroll
-        src="https://picsum.photos/1920/1080?random"
-      >
-        <template v-slot:img="{ props }">
-          <v-img
-            v-bind="props"
-            gradient="to top right, rgba(100,115,201,.7), rgba(25,32,72,.7)"
-          ></v-img>
-        </template>
-
-        <v-app-bar-nav-icon></v-app-bar-nav-icon>
+      <v-app-bar color="green" dark>
+        <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
 
         <v-toolbar-title>Title</v-toolbar-title>
 
         <v-spacer></v-spacer>
 
-        <router-link to="/">
+        
           <v-btn icon>
             <v-icon>mdi-magnify</v-icon>
           </v-btn>
-        </router-link>
 
         <router-link to="/about">
           <v-btn icon>
@@ -51,9 +62,7 @@
           <!-- If using vue-router -->
           <router-view></router-view>
 
-          <v-container
-            style="height: 1000px"
-          ></v-container>
+          <v-container style="height: 1000px"></v-container>
         </v-container>
       </v-main>
     </v-app>
@@ -64,7 +73,30 @@
       
 
 <script>
-export default {};
+export default {
+  data: () => ({
+    drawer: false,
+    drawerItems: [
+      {
+        title: "Home",
+        icon: "mdi-magnify",
+      },
+      {
+        title: "Dashboard",
+        icon: "mdi-magnify",
+      },
+      {
+        title: "About",
+        icon: "mdi-magnify",
+      },
+    ],
+  }),
+  computed: {
+    mini() {
+      return this.$vuetify.breakpoint.mdAndDown;
+    },
+  },
+};
 </script>
 
 <style lang="scss">
@@ -74,5 +106,7 @@ export default {};
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+
+a {  text-decoration: none;}
 }
 </style>

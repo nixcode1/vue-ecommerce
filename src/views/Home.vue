@@ -1,6 +1,6 @@
 <template>
-  <div id="scrolling-techniques-7" class="mx-auto">
-    <div class="d-flex flex-row flex-wrap flex-shrink justify-space-around">
+  <div class="mx-12">
+    <div class="d-flex flex-row flex-wrap flex-shrink justify-space-evenly">
       <v-card
         v-for="product in products"
         :key="product.id"
