@@ -1,6 +1,6 @@
 <template>
-  <div id="scrolling-techniques-7" class="mx-auto">
-    <div class="d-flex flex-row flex-wrap flex-shrink justify-space-around">
+  <div id="scrolling-techniques-7" class="mx-0">
+    <div class="d-flex flex-row flex-wrap flex-shrink justify-space-around mx-0">
       <v-card
         v-for="product in products"
         :key="product.id"
@@ -10,7 +10,7 @@
       >
         <v-img :src="product.imageUrl" max-height="50px" contain></v-img>
         <v-card-title>
-          <div class="headerClass">{{ product.name }}</div>
+          <div>{{ product.name }}</div>
         </v-card-title>
       </v-card>
     </div>
@@ -36,10 +36,6 @@ export default {
 </script>
 
 <style scoped>
-.headerClass {
-  white-space: nowrap;
-  word-break: normal;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
+
+
 </style>

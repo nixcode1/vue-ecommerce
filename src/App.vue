@@ -1,58 +1,37 @@
-ad<template>
+<template>
   <div id="app">
     <v-app>
-e      <v-navigation-drawer
-        app
-        v-model="drawer"
-        :permanent="$vuetify.breakpoint.mdOnly"
-        :temporary="$vuetify.breakpoint.smAndDown"
-        hide-overlay
-      >
-        <v-list-item>
-          <v-list-item-content>
-            <v-list-item-title>John Leider</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-
-        <v-divider></v-divider>
-
+      <v-navigation-drawer app v-model="drawer" temporary>
         <v-list dense>
           <v-list-item v-for="item in drawerItems" :key="item.title" link>
-            <router-link :to="{ path: '/' + item.title}">
-            <v-list-item-icon>
-              <v-icon>{{ item.icon }}</v-icon>
-            </v-list-item-icon>
+            <router-link :to="{ path: '/' + item.title }">
+              <v-container class="d-flex">
+                <v-list-item-icon class="mx-3 my-4">
+                  <v-icon color="green">{{ item.icon }}</v-icon>
+                </v-list-item-icon>
 
-            <v-list-item-content>
-              <v-list-item-title>{{ item.title }}</v-list-item-title>
-            </v-list-item-content>
+                <v-list-item-content>
+                  <v-list-item-title>{{ item.title }}</v-list-item-title>
+                </v-list-item-content>
+              </v-container>
             </router-link>
           </v-list-item>
         </v-list>
       </v-navigation-drawer>
 
-      <v-app-bar color="green" dark>
+      <v-app-bar color="green" app dark>
         <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-
-        <v-toolbar-title>Title</v-toolbar-title>
 
         <v-spacer></v-spacer>
 
-        
-          <v-btn icon>
-            <v-icon>mdi-magnify</v-icon>
-          </v-btn>
+        <v-toolbar-title>TechPlug</v-toolbar-title>
 
-        <router-link to="/about">
-          <v-btn icon>
-            <v-icon>mdi-heart</v-icon>
-          </v-btn>
-        </router-link>
-        <router-link to="/dashboard"
-          ><v-btn icon>
-            <v-icon>mdi-dots-vertical</v-icon>
-          </v-btn></router-link
-        >
+        <v-spacer></v-spacer>
+
+        <v-btn icon>
+          <v-icon>mdi-cart</v-icon>
+          <p style="color: orange">{{ count }}</p>
+        </v-btn>
       </v-app-bar>
 
       <!-- Sizes your content based upon application components -->
@@ -60,9 +39,9 @@ e      <v-navigation-drawer
         <!-- Provides the application the proper gutter -->
         <v-container fluid>
           <!-- If using vue-router -->
-          <router-view></router-view>
-
-          <v-container style="height: 1000px"></v-container>
+          <transition name="slide-fade">
+            <router-view></router-view>
+          </transition>
         </v-container>
       </v-main>
     </v-app>
@@ -79,15 +58,15 @@ export default {
     drawerItems: [
       {
         title: "Home",
-        icon: "mdi-magnify",
+        icon: "mdi-home",
       },
       {
         title: "Dashboard",
-        icon: "mdi-magnify",
+        icon: "mdi-desktop-mac-dashboard",
       },
       {
         title: "About",
-        icon: "mdi-magnify",
+        icon: "mdi-information",
       },
     ],
   }),
@@ -95,18 +74,32 @@ export default {
     mini() {
       return this.$vuetify.breakpoint.mdAndDown;
     },
+    count() {
+      return this.$store.state.count;
+    },
   },
+  methods: {
+    print() {
+      console.log("clicked")
+    }
+  }
 };
 </script>
 
 <style lang="scss">
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Source Pro", Tahoma, Geneva, Verdana, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
 
-a {  text-decoration: none;}
+  a {
+    text-decoration: none;
+    display: inline-flex;
+    padding: auto;
+    color: green;
+    font-size: 20;
+  }
 }
 </style>

@@ -4,11 +4,11 @@
       <v-card
         v-for="product in products"
         :key="product.id"
-        class="mx-4 my-2 pa-2"
-        max-height="150"
+        class="mx-4 my-2 pa-2 px"
+        max-height="200px"
         max-width="150"
       >
-        <v-img :src="product.imageUrl" max-height="50px" contain></v-img>
+        <v-img :src="product.imageUrl" max-height="100px" contain></v-img>
         <v-card-title>
           <div class="headerClass">{{ product.name }}</div>
         </v-card-title>
@@ -41,5 +41,6 @@ export default {
   word-break: normal;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-size: 14px;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <v-card max-width="50%" style="align-self: center">
+  <div class="d-flex flex-column px-10 align-center">
+    <v-card max-width="100%">
       <v-text-field
         filled
         v-model="product.name"
@@ -35,6 +35,15 @@
       ></v-file-input>
     </v-card>
     <v-btn @click="uploadFile">Add Product</v-btn>
+    <v-snackbar v-model="snackbar">
+      {{ `${product.name} has been added!` }}
+
+      <template v-slot:action="{ attrs }">
+        <v-btn color="pink" text v-bind="attrs" @click="snackbar = false">
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
   </div>
 </template>
 
@@ -58,6 +67,7 @@ export default {
       },
       imageUrl: null,
       imgFile: null,
+      snackbar: false,
     };
   },
   methods: {
@@ -82,6 +92,13 @@ export default {
         })
         .then((docRef) => {
           console.log("Document written with ID: ", docRef.id);
+          this.snackbar = true;
+          this.product = {
+            name: "",
+            description: "",
+            price: 0,
+            category: "",
+          };
         })
         .catch(function (error) {
           console.error("Error adding document: ", error);
