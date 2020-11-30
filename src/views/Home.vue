@@ -1,12 +1,12 @@
 <template>
-  <div class="mx-12">
-    <div class="d-flex flex-row flex-wrap flex-shrink justify-space-evenly">
+  <div>
+    <div class="d-flex flex-row flex-wrap">
       <v-card
         v-for="product in products"
         :key="product.id"
-        class="mx-4 my-2 pa-2 px"
-        max-height="200px"
-        max-width="150"
+        class="mx-4 my-4 pa-3 d-flex flex-column align-center"
+        max-height="500"
+        max-width="300"
       >
         <v-img :src="product.imageUrl" max-height="100px" contain></v-img>
         <v-card-title>

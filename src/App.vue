@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <v-app>
-      <v-navigation-drawer app v-model="drawer" temporary>
+      <v-navigation-drawer app v-model="drawer" class="d-flex d.none">
         <v-list dense>
           <v-list-item v-for="item in drawerItems" :key="item.title" link>
             <router-link :to="{ path: '/' + item.title }">
