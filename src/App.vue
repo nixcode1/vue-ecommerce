@@ -1,12 +1,12 @@
 <template>
   <div id="app">
     <v-app>
-      <v-navigation-drawer app v-model="drawer" class="d-flex d.none">
+      <v-navigation-drawer app expand-on-hover clipped v-model="drawer" class="d-flex d.none">
         <v-list dense>
           <v-list-item v-for="item in drawerItems" :key="item.title" link>
             <router-link :to="{ path: '/' + item.title }">
-              <v-container class="d-flex">
-                <v-list-item-icon class="mx-3 my-4">
+              <v-container class="d-flex px-0 mx-0">
+                <v-list-item-icon class="">
                   <v-icon color="green">{{ item.icon }}</v-icon>
                 </v-list-item-icon>
 
@@ -96,8 +96,6 @@ export default {
 
   a {
     text-decoration: none;
-    display: inline-flex;
-    padding: auto;
     color: green;
     font-size: 20;
   }

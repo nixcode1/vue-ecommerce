@@ -1,5 +1,6 @@
 <template>
-  <div class="d-flex flex-column px-10 align-center">
+  <div class="px-14 py-5">
+    <v-img :src="imageUrl" max-height="150px" contain></v-img>
     <v-card max-width="100%">
       <v-text-field
         filled
@@ -33,6 +34,7 @@
         label="Select Image File..."
         accept="image/*"
       ></v-file-input>
+      <v-img :src="imgFile" max-height="150px" contain></v-img>
     </v-card>
     <v-btn @click="uploadFile">Add Product</v-btn>
     <v-snackbar v-model="snackbar">
@@ -57,6 +59,7 @@ export default {
   name: "Dashboard",
   data() {
     return {
+      rating: null,
       products: [],
       users: [],
       product: {
@@ -183,5 +186,9 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+btn:hover {
+  background-color: green;
+  color: white;
+}
 </style>

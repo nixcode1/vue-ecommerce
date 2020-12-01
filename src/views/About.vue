@@ -3,9 +3,13 @@
     <h1>This is an about page</h1>
     <p>{{ count }}</p>
     <p>{{ num }}</p>
-    <v-btn elevation="2" @click="snackbar = !snackbar"></v-btn>
+    <v-hover v-slot="{ hover }">
+      <v-btn :class="{ 'on-hover': hover }" :text='hover? true: false' @click="snackbar = !snackbar"
+        >Button</v-btn
+      >
+      
+    </v-hover>
     <v-snackbar
-      :timeout="-1"
       :value="snackbar"
       absolute
       bottom
@@ -38,5 +42,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.v-btn.on-hover{
+  color: white;
+  background-color: green;
+  }
 </style>

@@ -1,18 +1,7 @@
 <template>
   <div>
     <div class="d-flex flex-row flex-wrap">
-      <v-card
-        v-for="product in products"
-        :key="product.id"
-        class="mx-4 my-4 pa-3 d-flex flex-column align-center"
-        max-height="500"
-        max-width="300"
-      >
-        <v-img :src="product.imageUrl" max-height="100px" contain></v-img>
-        <v-card-title>
-          <div class="headerClass">{{ product.name }}</div>
-        </v-card-title>
-      </v-card>
+      <item-card v-for="item in products" v-bind:key="item.id" v-bind:product="item"/>
     </div>
 
   </div>
@@ -20,27 +9,25 @@
  
 <script>
 import { db } from "../db/db.js";
+import ItemCard from '../components/ItemCard';
 
 export default {
   name: "Homepage",
+  components: {
+    ItemCard
+  },
   data() {
     return {
       products: [],
     };
   },
   created: async function () {
-    let query = await db.collection("products").get();
-    query.forEach((doc) => this.products.push(doc.data()));
+    let results = await db.collection("products").get();
+    results.forEach((doc) => this.products.push(doc.data()));
   },
 };
 </script>
 
 <style scoped>
-.headerClass {
-  white-space: nowrap;
-  word-break: normal;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-size: 14px;
-}
+
 </style>
