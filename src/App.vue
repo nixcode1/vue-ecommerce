@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <v-app>
-      <v-navigation-drawer app expand-on-hover clipped v-model="drawer" class="d-flex d.none">
+      <v-navigation-drawer app expand-on-hover v-model="drawer" class="d-flex d.none">
         <v-list dense>
           <v-list-item v-for="item in drawerItems" :key="item.title" link>
             <router-link :to="{ path: '/' + item.title }">
@@ -65,7 +65,7 @@ export default {
         icon: "mdi-desktop-mac-dashboard",
       },
       {
-        title: "About",
+        title: "Orders",
         icon: "mdi-information",
       },
     ],
