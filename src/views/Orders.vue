@@ -3,8 +3,8 @@
     <h1>This is an about page</h1>
     <p>{{ count }}</p>
     <p>{{ num }}</p>
-    <p>{{ orders }}</p>
-    <v-hover v-slot="{ hover }">
+    
+    <v-hover v-slot="{ hover }">s
       <v-btn
         :class="{ 'on-hover': hover }"
         :text="hover ? true : false"
