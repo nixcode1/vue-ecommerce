@@ -14,7 +14,7 @@
         </v-card-title>
       </v-card>
     </div>
-
+    
   </div>
 </template>
  

@@ -3,7 +3,7 @@
     <v-container >
       <v-card
       class="mx-4 my-4 pa-3 d-flex flex-column align-center"
-      max-height="500"
+      max-height="300"
       max-width="300"
     >
       <v-img :src="product.imageUrl" max-height="150px" contain></v-img>

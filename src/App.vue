@@ -59,15 +59,24 @@ export default {
       {
         title: "Home",
         icon: "mdi-home",
+        link: '/home'
       },
       {
         title: "Dashboard",
         icon: "mdi-desktop-mac-dashboard",
+        link: '/dashboard'
+
       },
       {
         title: "Orders",
         icon: "mdi-information",
+        link: "/orders"
       },
+      {
+        title: "Test",
+        icon: "mdi-information",
+        link: '/test'
+      }
     ],
   }),
   computed: {
