@@ -69,7 +69,7 @@
         <v-dialog v-model="dialogDelete" max-width="500px">
           <v-card>
             <v-card-title class="headline"
-              >Are you sure you want to delete this item?</v-card-title
+              >Are you sure you want to delete "{{deleteItem.name}}"?</v-card-title
             >
             <v-card-actions>
               <v-spacer></v-spacer>
@@ -87,7 +87,7 @@
     </template>
     <template v-slot:[`item.actions`]="{ item }">
       <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil </v-icon>
-      <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
+      <v-icon small @click="deleteProduct(item)"> mdi-delete </v-icon>
     </template>
     <template v-slot:no-data>
       <v-btn color="primary" @click="initialize"> Reset </v-btn>
@@ -105,6 +105,13 @@ export default {
   data: () => ({
     dialog: false,
     dialogDelete: false,
+    deleteItem: {
+      name: "",
+      id: ""
+    },
+    products: [],
+    editedIndex: -1,
+    imgFile: null,
     headers: [
       {
         text: "Name",
@@ -117,10 +124,8 @@ export default {
       { text: "Actions", value: "actions", sortable: false }
       
     ],
-    products: [],
-    editedIndex: -1,
-    imgFile: null,
     editedItem: {
+      id: "",
       name: "",
       price: 0,
       category: "",
@@ -128,6 +133,7 @@ export default {
       imageUrl: "",
     },
     defaultItem: {
+      id: "",
       name: "",
       price: 0,
       category: "",
@@ -165,6 +171,11 @@ export default {
         this.products = data;
       })
     },
+    updateProduct(product) {
+      db.collection("products").doc(product.id).update({...product}).then(() => console.log("Document updated")).catch((error) => console.log("Error" + error));
+      console.log(product)
+      this.close();
+    },
     async addProduct(product) {
       let docRef = db.collection("products").doc();
         docRef.set({
@@ -187,14 +198,17 @@ export default {
       this.dialog = true;
     },
 
-    deleteItem(item) {
-      this.editedIndex = this.products.indexOf(item);
-      this.editedItem = Object.assign({}, item);
+    deleteProduct(item) {
+      // this.editedIndex = this.products.indexOf(item);
+      // this.editedItem = Object.assign({}, item);
+      this.deleteItem = item;
       this.dialogDelete = true;
     },
 
     deleteItemConfirm() {
-      this.desserts.splice(this.editedIndex, 1);
+      db.collection("products").doc(this.deleteItem.id).delete().then(function() {
+    console.log("Document successfully deleted!");
+})
       this.closeDelete();
     },
 
@@ -216,7 +230,7 @@ export default {
 
     async save() {
       if (this.editedIndex > -1) {
-        Object.assign(this.desserts[this.editedIndex], this.editedItem);
+        this.updateProduct(this.editedItem);
       } else {
         console.log(this.editedItem);
         await this.uploadFile();
