@@ -87,10 +87,7 @@ export default {
       db.collection("products")
         .add({
           id: id,
-          name: this.product.name,
-          description: this.product.description,
-          price: parseInt(this.product.price),
-          category: this.product.category,
+          ...this.product,
           imageUrl: this.imageUrl,
         })
         .then((docRef) => {

@@ -62,9 +62,9 @@ export default {
         link: '/home'
       },
       {
-        title: "Dashboard",
+        title: "Products",
         icon: "mdi-desktop-mac-dashboard",
-        link: '/dashboard'
+        link: '/Products'
 
       },
       {
