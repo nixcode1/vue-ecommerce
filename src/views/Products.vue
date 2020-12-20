@@ -1,98 +1,102 @@
 <template>
   <div>
     <v-data-table
-    :headers="headers"
-    :items="products"
-    sort-by="calories"
-    class="elevation-1"
-  >
-    <template v-slot:top>
-      <v-toolbar>
-        <v-toolbar-title>PRODUCTS</v-toolbar-title>
-        <v-divider class="mx-4" inset vertical></v-divider>
-        <v-spacer></v-spacer>
-        <v-dialog v-model="dialog" max-width="500px">
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
-              New Item
-            </v-btn>
-          </template>
-          <v-card>
-            <v-card-title>
-              <span class="headline">{{ formTitle }}</span>
-            </v-card-title>
+      :headers="headers"
+      :items="products"
+      sort-by="calories"
+      class="elevation-1"
+    >
+      <template v-slot:top>
+        <v-toolbar>
+          <v-toolbar-title>PRODUCTS</v-toolbar-title>
+          <v-divider class="mx-4" inset vertical></v-divider>
+          <v-spacer></v-spacer>
+          <v-dialog v-model="dialog" max-width="500px">
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
+                New Item
+              </v-btn>
+            </template>
+            <v-card>
+              <v-card-title>
+                <span class="headline">{{ formTitle }}</span>
+              </v-card-title>
 
-            <v-card-text>
-              <v-container>
-                <v-row>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field
-                      v-model="editedItem.name"
-                      label="Product name"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field
-                      v-model="editedItem.description"
-                      label="Product description"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field
-                      v-model.number="editedItem.price"
-                      label="Price"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field
-                      v-model="editedItem.category"
-                      label="Category"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-file-input
-                      v-model="imgFile"
-                      label="Image"
-                    ></v-file-input>
-                  </v-col>
-                </v-row>
-              </v-container>
-            </v-card-text>
+              <v-card-text>
+                <v-container>
+                  <v-row>
+                    <v-col cols="12" sm="6" md="4">
+                      <v-text-field
+                        v-model="editedItem.name"
+                        label="Product name"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="12" sm="6" md="4">
+                      <v-text-field
+                        v-model="editedItem.description"
+                        label="Product description"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="12" sm="6" md="4">
+                      <v-text-field
+                        v-model.number="editedItem.price"
+                        label="Price"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="12" sm="6" md="4">
+                      <v-text-field
+                        v-model="editedItem.category"
+                        label="Category"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="12" sm="6" md="4">
+                      <v-file-input
+                        v-model="imgFile"
+                        label="Image"
+                      ></v-file-input>
+                    </v-col>
+                  </v-row>
+                </v-container>
+              </v-card-text>
 
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="close"> Cancel </v-btn>
-              <v-btn color="blue darken-1" text @click="save"> Save </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-        <v-dialog v-model="dialogDelete" max-width="500px">
-          <v-card>
-            <v-card-title class="headline"
-              >Are you sure you want to delete "{{deleteItem.name}}"?</v-card-title
-            >
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="closeDelete"
-                >Cancel</v-btn
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="blue darken-1" text @click="close">
+                  Cancel
+                </v-btn>
+                <v-btn color="blue darken-1" text @click="save"> Save </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+          <v-dialog v-model="dialogDelete" max-width="500px">
+            <v-card>
+              <v-card-title class="headline"
+                >Are you sure you want to delete "{{
+                  deleteItem.name
+                }}"?</v-card-title
               >
-              <v-btn color="blue darken-1" text @click="deleteItemConfirm"
-                >OK</v-btn
-              >
-              <v-spacer></v-spacer>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-      </v-toolbar>
-    </template>
-    <template v-slot:[`item.actions`]="{ item }">
-      <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil </v-icon>
-      <v-icon small @click="deleteProduct(item)"> mdi-delete </v-icon>
-    </template>
-    <template v-slot:no-data>
-      <v-btn color="primary" @click="initialize"> Reset </v-btn>
-    </template>
-  </v-data-table>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="blue darken-1" text @click="closeDelete"
+                  >Cancel</v-btn
+                >
+                <v-btn color="blue darken-1" text @click="deleteItemConfirm"
+                  >OK</v-btn
+                >
+                <v-spacer></v-spacer>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+        </v-toolbar>
+      </template>
+      <template v-slot:[`item.actions`]="{ item }">
+        <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil </v-icon>
+        <v-icon small @click="deleteProduct(item)"> mdi-delete </v-icon>
+      </template>
+      <template v-slot:no-data>
+        <v-btn color="primary" @click="initialize"> Reset </v-btn>
+      </template>
+    </v-data-table>
   </div>
 </template>
 
@@ -107,7 +111,7 @@ export default {
     dialogDelete: false,
     deleteItem: {
       name: "",
-      id: ""
+      id: "",
     },
     products: [],
     editedIndex: -1,
@@ -121,8 +125,7 @@ export default {
       },
       { text: "Price", value: "price" },
       { text: "Category", value: "category" },
-      { text: "Actions", value: "actions", sortable: false }
-      
+      { text: "Actions", value: "actions", sortable: false },
     ],
     editedItem: {
       id: "",
@@ -158,39 +161,44 @@ export default {
   },
 
   created() {
-    this.initialize()
+    this.initialize();
   },
 
   methods: {
     async initialize() {
-      db.collection("products").onSnapshot(querySnapshot => {
+      db.collection("products").onSnapshot((querySnapshot) => {
         let data = [];
-        querySnapshot.forEach(doc => {
-          data.push(doc.data())
-        })
+        querySnapshot.forEach((doc) => {
+          data.push(doc.data());
+        });
         this.products = data;
-      })
+      });
     },
     updateProduct(product) {
-      db.collection("products").doc(product.id).update({...product}).then(() => console.log("Document updated")).catch((error) => console.log("Error" + error));
-      console.log(product)
+      db.collection("products")
+        .doc(product.id)
+        .update({ ...product })
+        .then(() => console.log("Document updated"))
+        .catch((error) => console.log("Error" + error));
+      console.log(product);
       this.close();
     },
     async addProduct(product) {
       let docRef = db.collection("products").doc();
-        docRef.set({
+      docRef
+        .set({
           id: docRef.id,
           ...product,
           createdAt: firebase.firestore.Timestamp.now(),
         })
-        .then(function() {
-    console.log("Document successfully written!");
-})
+        .then(function () {
+          console.log("Document successfully written!");
+        })
 
-        .catch(function (error)  {
+        .catch(function (error) {
           console.error("Error adding document: ", error);
         });
-        this.close();
+      this.close();
     },
     editItem(item) {
       this.editedIndex = this.products.indexOf(item);
@@ -206,9 +214,12 @@ export default {
     },
 
     deleteItemConfirm() {
-      db.collection("products").doc(this.deleteItem.id).delete().then(function() {
-    console.log("Document successfully deleted!");
-})
+      db.collection("products")
+        .doc(this.deleteItem.id)
+        .delete()
+        .then(function () {
+          console.log("Document successfully deleted!");
+        });
       this.closeDelete();
     },
 
@@ -235,7 +246,6 @@ export default {
         console.log(this.editedItem);
         await this.uploadFile();
       }
-      
     },
     async uploadFile() {
       console.log(this.imgFile.name);
@@ -297,7 +307,7 @@ export default {
           uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
             console.log("File available at", downloadURL);
             this.editedItem.imageUrl = downloadURL;
-            console.log(this.editedItem)
+            console.log(this.editedItem);
             this.addProduct(this.editedItem);
             this.imgFile = null;
             this.editItem = this.defaultItem;

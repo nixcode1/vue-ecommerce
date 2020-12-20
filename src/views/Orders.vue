@@ -38,6 +38,8 @@
 
 <script>
 import { mapState } from "vuex";
+import "firebase/app";
+import "firebase/firestore";
 import { db } from "../db/db";
 
 export default {
@@ -60,7 +62,8 @@ export default {
       { text: "Items count", value: "items.length" },
       { text: "Total Price", value: "totalPrice" },
       { text: "Phone No", value: "user.phoneNo" },
-      { text: "Address", value: "address" },
+      { text: "Address", value: "user.address" },
+      { text: "Date", value: "date" },
       { text: "Status", value: "status" },
       { text: "Completed", value: "isCompleted" },
     ],
@@ -115,21 +118,32 @@ export default {
       console.log("Dialog closed");
     },
     async initialize() {
+      // const options = {
+      //   year: "numeric",
+      //   month: "numeric",
+      //   day: "numeric",
+      //   hour: "numeric",
+      //   minute: "numeric",
+      // };
       db.collection("orders").onSnapshot((querysnapshot) => {
         querysnapshot.forEach((doc) => {
           let order = {};
           order = doc.data();
           order.id = doc.id;
+          order.date = doc
+            .data()
+            .date.toDate()
+            .toLocaleString("en-US");
+          console.log(doc.data());
           this.orders.push(order);
-          console.log(order);
+          // console.log(order);
         });
+        this.isLoading = false;
       });
-      this.isLoading = false;
     },
     increment() {
       this.$store.commit("increment", 5);
     },
-    
   },
   created() {
     this.initialize();

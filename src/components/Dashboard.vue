@@ -6,27 +6,23 @@
         filled
         v-model="product.name"
         label="Name"
-        style="width: 60%, margin: 20px"
-      />
+        style="width: 60%, margin: 20px" />
       <v-text-field
         filled
         v-model="product.description"
         label="Description"
-        style="width: 60%, margin: 20px"
-      />
+        style="width: 60%, margin: 20px" />
       <v-text-field
         type="number"
         filled
         v-model="product.price"
         label="Price"
-        style="width: 60%, margin: 20px"
-      />
+        style="width: 60%, margin: 20px" />
       <v-text-field
         filled
         v-model="product.category"
         label="Category"
-        style="width: 60%, margin: 20px"
-      />
+        style="width: 60%, margin: 20px" />
       <v-file-input
         v-model="imgFile"
         solo
@@ -34,8 +30,8 @@
         label="Select Image File..."
         accept="image/*"
       ></v-file-input>
-      <v-img :src="imgFile" max-height="150px" contain></v-img>
-    </v-card>
+      <v-img :src="imgFile" max-height="150px" contain></v-img
+    ></v-card>
     <v-btn @click="uploadFile">Add Product</v-btn>
     <v-snackbar v-model="snackbar">
       {{ `${product.name} has been added!` }}
