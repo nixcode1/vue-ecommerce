@@ -185,11 +185,17 @@ export default {
     },
     async addProduct(product) {
       let docRef = db.collection("products").doc();
+      console.log("ID" + docRef.id);
+      product.id = docRef.id
       docRef
         .set({
-          id: docRef.id,
           ...product,
           createdAt: firebase.firestore.Timestamp.now(),
+          properties: {
+            gpu_class: 1,
+            cpu_class: 1,
+            storage: "HDD",
+          },
         })
         .then(function () {
           console.log("Document successfully written!");
@@ -198,7 +204,6 @@ export default {
         .catch(function (error) {
           console.error("Error adding document: ", error);
         });
-      this.close();
     },
     editItem(item) {
       this.editedIndex = this.products.indexOf(item);
@@ -217,10 +222,10 @@ export default {
       db.collection("products")
         .doc(this.deleteItem.id)
         .delete()
-        .then(function () {
+        .then( () => {
           console.log("Document successfully deleted!");
+          this.closeDelete();
         });
-      this.closeDelete();
     },
 
     close() {
@@ -307,8 +312,8 @@ export default {
           uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
             console.log("File available at", downloadURL);
             this.editedItem.imageUrl = downloadURL;
-            console.log(this.editedItem);
             this.addProduct(this.editedItem);
+            this.close();
             this.imgFile = null;
             this.editItem = this.defaultItem;
           });
