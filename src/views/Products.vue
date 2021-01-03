@@ -64,7 +64,7 @@
                 <v-btn color="blue darken-1" text @click="close">
                   Cancel
                 </v-btn>
-                <v-btn color="blue darken-1" text @click="save"> Save </v-btn>
+                <v-btn color="blue darken-1" text @click="save"> {{ editedItem.id? "Update" : "Save"}} </v-btn>
               </v-card-actions>
             </v-card>
           </v-dialog>
@@ -186,7 +186,7 @@ export default {
     async addProduct(product) {
       let docRef = db.collection("products").doc();
       console.log("ID" + docRef.id);
-      product.id = docRef.id
+      product.id = docRef.id;
       docRef
         .set({
           ...product,
@@ -222,7 +222,7 @@ export default {
       db.collection("products")
         .doc(this.deleteItem.id)
         .delete()
-        .then( () => {
+        .then(() => {
           console.log("Document successfully deleted!");
           this.closeDelete();
         });
