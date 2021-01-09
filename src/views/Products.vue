@@ -102,6 +102,7 @@
 
 <script>
 import { db } from "../db/db.js";
+import  { mapState, mapActions } from 'vuex';
 import firebase from "firebase/app";
 import "firebase/storage";
 
@@ -113,7 +114,6 @@ export default {
       name: "",
       id: "",
     },
-    products: [],
     editedIndex: -1,
     imgFile: null,
     headers: [
@@ -149,6 +149,9 @@ export default {
     formTitle() {
       return this.editedIndex === -1 ? "New Item" : "Edit Item";
     },
+    ...mapState('productsStore', {
+      products: state => state.products
+    })
   },
 
   watch: {
@@ -165,15 +168,9 @@ export default {
   },
 
   methods: {
-    async initialize() {
-      db.collection("products").onSnapshot((querySnapshot) => {
-        let data = [];
-        querySnapshot.forEach((doc) => {
-          data.push(doc.data());
-        });
-        this.products = data;
-      });
-    },
+    ...mapActions('productsStore',[
+      'initialize'
+    ]),
     updateProduct(product) {
       db.collection("products")
         .doc(product.id)

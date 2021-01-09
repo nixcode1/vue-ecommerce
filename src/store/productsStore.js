@@ -1,51 +1,26 @@
+import { db } from "../db/db.js";
+
 const productsStore = {
   namespaced: true,
   state: () => ({
-    name: "Text",
-    dialog: false,
-    dialogDelete: false,
-    deleteItem: {
-      name: "",
-      id: "",
-    },
-    products: [],
-    editedIndex: -1,
-    imgFile: null,
-    headers: [
-      {
-        text: "Name",
-        align: "start",
-        sortable: false,
-        value: "name",
-      },
-      { text: "Price", value: "price" },
-      { text: "Category", value: "category" },
-      { text: "Actions", value: "actions", sortable: false },
-    ],
-    editedItem: {
-      id: "",
-      name: "",
-      price: 0,
-      category: "",
-      description: "",
-      imageUrl: "",
-    },
-    defaultItem: {
-      id: "",
-      name: "",
-      price: 0,
-      category: "",
-      description: "",
-      imageUrl: "",
-    },
+    products: []
   }),
   mutations: {
-    increase(state) {
-      // mutate state
-      state.number++;
+    setProducts(state, payload){
+      state.products = payload
+    }
+  },
+  actions: {
+    initialize(context) {
+      let data = [];
+      db.collection("products").onSnapshot((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          data.push(doc.data());
+        });
+      });
+      context.commit('setProducts', data);
     },
   },
-  actions: {},
   getters: {},
 };
 
